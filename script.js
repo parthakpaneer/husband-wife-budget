@@ -5,15 +5,17 @@ const budget = 16000;
 function startApp() {
   const db = window.db;
 
-  window.loginAs = function(role) {
-    console.log("Login as", role);
+  // 🧑‍🤝‍🧑 Login as husband or wife
+  window.loginAs = function (role) {
     user = role;
+    console.log(`Logged in as ${user}`);
     document.getElementById("login-box").style.display = "none";
     document.getElementById("tracker").style.display = "block";
     showCurrentDay();
     fetchExpenses();
   };
 
+  // ➕ Add new expense
   window.addExpense = function () {
     const amount = parseFloat(document.getElementById("amount").value);
     const note = document.getElementById("note").value;
@@ -25,24 +27,27 @@ function startApp() {
 
     const entry = {
       by: user,
-      amount: amount,
-      note: note,
+      amount,
+      note,
       date: new Date().toLocaleDateString()
     };
 
     db.ref("expenses").push(entry);
+    fireConfetti(); // 🎉 show confetti
     document.getElementById("amount").value = "";
     document.getElementById("note").value = "";
   };
 
+  // 🗑️ Delete an expense by ID
   window.deleteExpense = function (id) {
     db.ref("expenses").child(id).remove();
   };
 
+  // 📡 Fetch all expenses from Firebase
   function fetchExpenses() {
-    db.ref("expenses").on("value", snapshot => {
+    db.ref("expenses").on("value", (snapshot) => {
       expenses = [];
-      snapshot.forEach(child => {
+      snapshot.forEach((child) => {
         const data = child.val();
         data.id = child.key;
         expenses.push(data);
@@ -51,6 +56,7 @@ function startApp() {
     });
   }
 
+  // 🧾 Update the DOM with expenses and totals
   function updateDisplay() {
     let total = 0;
     let husbandTotal = 0;
@@ -59,10 +65,11 @@ function startApp() {
     const container = document.getElementById("expenses");
     container.innerHTML = "";
 
-    expenses.forEach(exp => {
+    expenses.forEach((exp) => {
       total += exp.amount;
-      if (exp.by === "husband") husbandTotal += exp.amount;
-      else wifeTotal += exp.amount;
+      exp.by === "husband"
+        ? (husbandTotal += exp.amount)
+        : (wifeTotal += exp.amount);
 
       const div = document.createElement("div");
       div.className = "expense-entry";
@@ -70,30 +77,35 @@ function startApp() {
       const img = document.createElement("img");
       img.src = `assets/${exp.by}.png`;
       img.alt = exp.by;
-      img.style.height = "28px";
-      img.style.width = "28px";
-      img.style.borderRadius = "50%";
-      img.style.objectFit = "cover";
-      img.style.marginRight = "8px";
-      img.style.verticalAlign = "middle";
+
+      Object.assign(img.style, {
+        height: "28px",
+        width: "28px",
+        borderRadius: "50%",
+        objectFit: "cover",
+        marginRight: "8px",
+        verticalAlign: "middle"
+      });
 
       const text = document.createElement("span");
       text.innerHTML = `<strong>${exp.by}</strong> spent ₹${exp.amount} on "${exp.note}" — <em>${exp.date}</em>`;
 
       const button = document.createElement("button");
       button.textContent = "Delete";
-      button.style.float = "right";
-      button.style.background = "#ff5555";
-      button.style.border = "none";
-      button.style.color = "white";
-      button.style.borderRadius = "5px";
-      button.style.padding = "4px";
+      Object.assign(button.style, {
+        float: "right",
+        background: "#ff5555",
+        border: "none",
+        color: "white",
+        borderRadius: "5px",
+        padding: "4px",
+        cursor: "pointer"
+      });
       button.onclick = () => window.deleteExpense(exp.id);
 
       div.appendChild(img);
       div.appendChild(text);
       div.appendChild(button);
-
       container.appendChild(div);
     });
 
@@ -103,18 +115,28 @@ function startApp() {
     document.getElementById("wife-spent").textContent = wifeTotal;
   }
 
+  // 📅 Calculate current day of trip
   function showCurrentDay() {
     const start = new Date("2025-07-06");
     const today = new Date();
     let currentDay = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
 
+    const dayText = document.getElementById("day-number");
+    const formArea = document.getElementById("form-area");
+
     if (currentDay < 1) currentDay = 1;
+
     if (currentDay > 8) {
-      document.getElementById("day-number").textContent = "Trip Over";
-      document.getElementById("form-area").style.display = "none";
+      dayText.textContent = "Trip Over";
+      formArea.style.display = "none";
     } else {
-      document.getElementById("day-number").textContent = currentDay;
-      document.getElementById("form-area").style.display = "block";
+      dayText.textContent = currentDay;
+      formArea.style.display = "block";
     }
   }
 }
+
+// ✅ Start app after window load
+window.addEventListener("load", () => {
+  startApp();
+});

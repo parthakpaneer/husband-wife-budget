@@ -1,11 +1,14 @@
+// ✅ Declare these globally
 let user = null;
 let expenses = [];
 const budget = 15000;
 
 function startApp() {
-  const db = window.db;
+  const db = window.db; // Get db from global Firebase
 
+  // ✅ Make these globally available
   window.loginAs = function(role) {
+    console.log("Login as", role);
     user = role;
     document.getElementById("login-box").style.display = "none";
     document.getElementById("tracker").style.display = "block";
@@ -13,35 +16,7 @@ function startApp() {
     fetchExpenses();
   };
 
-  function showCurrentDay() {
-    const start = new Date("2025-07-06");
-    const today = new Date();
-    let currentDay = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
-
-    if (currentDay < 1) currentDay = 1;
-
-    if (currentDay > 8) {
-      document.getElementById("day-number").textContent = "Trip Over";
-      document.getElementById("form-area").style.display = "none";
-    } else {
-      document.getElementById("day-number").textContent = currentDay;
-      document.getElementById("form-area").style.display = "block";
-    }
-  }
-
-  function fetchExpenses() {
-    db.ref("expenses").on("value", snapshot => {
-      expenses = [];
-      snapshot.forEach(child => {
-        const data = child.val();
-        data.id = child.key;
-        expenses.push(data);
-      });
-      updateDisplay();
-    });
-  }
-
-  window.addExpense = function() {
+  window.addExpense = function () {
     const amount = parseFloat(document.getElementById("amount").value);
     const note = document.getElementById("note").value;
 
@@ -58,14 +33,25 @@ function startApp() {
     };
 
     db.ref("expenses").push(entry);
-
     document.getElementById("amount").value = "";
     document.getElementById("note").value = "";
   };
 
-  window.deleteExpense = function(id) {
+  window.deleteExpense = function (id) {
     db.ref("expenses").child(id).remove();
   };
+
+  function fetchExpenses() {
+    db.ref("expenses").on("value", snapshot => {
+      expenses = [];
+      snapshot.forEach(child => {
+        const data = child.val();
+        data.id = child.key;
+        expenses.push(data);
+      });
+      updateDisplay();
+    });
+  }
 
   function updateDisplay() {
     let total = 0;
@@ -109,6 +95,7 @@ function startApp() {
       div.appendChild(img);
       div.appendChild(text);
       div.appendChild(button);
+
       container.appendChild(div);
     });
 
@@ -116,5 +103,20 @@ function startApp() {
     document.getElementById("budget-left").textContent = budget - total;
     document.getElementById("husband-spent").textContent = husbandTotal;
     document.getElementById("wife-spent").textContent = wifeTotal;
+  }
+
+  function showCurrentDay() {
+    const start = new Date("2025-07-06");
+    const today = new Date();
+    let currentDay = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
+
+    if (currentDay < 1) currentDay = 1;
+    if (currentDay > 8) {
+      document.getElementById("day-number").textContent = "Trip Over";
+      document.getElementById("form-area").style.display = "none";
+    } else {
+      document.getElementById("day-number").textContent = currentDay;
+      document.getElementById("form-area").style.display = "block";
+    }
   }
 }

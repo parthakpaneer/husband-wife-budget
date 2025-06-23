@@ -13,7 +13,7 @@
     <button onclick="loginAs('wife')">Login as Wife</button>
   </div>
 
-  <!-- Main Tracker UI (hidden at first) -->
+  <!-- Main Tracker UI -->
   <div id="tracker" style="display:none;">
     <h2>Day <span id="day-number"></span> of 8</h2>
     <p>💰 Total Spent: ₹<span id="total-spent">0</span></p>
@@ -30,33 +30,27 @@
     <div id="expenses"></div>
   </div>
 
- <!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 
-<!-- Firebase Config and App Initialization -->
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyB9EjyfRH-Hcl55GAOM81JOkEHXePxB58o",
-    authDomain: "coupleexpenses-bbad1.firebaseapp.com",
-    databaseURL: "https://coupleexpenses-bbad1-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "coupleexpenses-bbad1",
-    storageBucket: "coupleexpenses-bbad1.firebasestorage.app",
-    messagingSenderId: "1078850646299",
-    appId: "1:1078850646299:web:5849ca65f9d4270661e3be"
-  };
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9EjyfRH-Hcl55GAOM81JOkEHXePxB58o",
+      authDomain: "coupleexpenses-bbad1.firebaseapp.com",
+      databaseURL: "https://coupleexpenses-bbad1-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "coupleexpenses-bbad1",
+      storageBucket: "coupleexpenses-bbad1.firebasestorage.app",
+      messagingSenderId: "1078850646299",
+      appId: "1:1078850646299:web:5849ca65f9d4270661e3be"
+    };
 
-  firebase.initializeApp(firebaseConfig);
-  window.db = firebase.database(); // Make db accessible globally
+    firebase.initializeApp(firebaseConfig);
+    window.db = firebase.database(); // Make globally accessible
+  </script>
 
-  // 👇 This is crucial to run script.js only AFTER Firebase is ready
-  window.addEventListener("load", () => {
-    startApp();
-  });
-</script>
-
-<!-- Main App Logic -->
-<script src="script.js"></script>
-
+  <!-- Your main app logic -->
+  <script src="script.js"></script>
 </body>
 </html>

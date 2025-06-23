@@ -2,7 +2,7 @@ function startApp() {
   let user = null;
   let expenses = [];
   const budget = 15000;
-  const db = window.db; // ✅ Get db from global
+  const db = window.db;
 
   window.loginAs = function(role) {
     user = role;
@@ -15,8 +15,8 @@ function startApp() {
   function showCurrentDay() {
     const start = new Date("2025-07-06");
     const today = new Date();
-
     let currentDay = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
+
     if (currentDay < 1) currentDay = 1;
 
     if (currentDay > 8) {
@@ -57,6 +57,7 @@ function startApp() {
     };
 
     db.ref("expenses").push(entry);
+
     document.getElementById("amount").value = "";
     document.getElementById("note").value = "";
   };
@@ -107,7 +108,6 @@ function startApp() {
       div.appendChild(img);
       div.appendChild(text);
       div.appendChild(button);
-
       container.appendChild(div);
     });
 

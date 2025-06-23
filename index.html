@@ -34,7 +34,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 
-  <!-- Firebase Config -->
+  <!-- Firebase Config + Init + Start App -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyB9EjyfRH-Hcl55GAOM81JOkEHXePxB58o",
@@ -47,10 +47,15 @@
     };
 
     firebase.initializeApp(firebaseConfig);
-    window.db = firebase.database(); // Make globally accessible
+    window.db = firebase.database();
+
+    // ✅ Delay app logic until after Firebase is initialized
+    window.addEventListener("load", () => {
+      startApp();
+    });
   </script>
 
-  <!-- Your main app logic -->
+  <!-- App Logic -->
   <script src="script.js"></script>
 </body>
 </html>

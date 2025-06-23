@@ -30,18 +30,18 @@
     <div id="expenses"></div>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+  <!-- ✅ Firebase SDKs: UMD (NOT modules) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
-  <!-- Firebase Config + Init + Start App -->
+  <!-- ✅ Firebase Config -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyB9EjyfRH-Hcl55GAOM81JOkEHXePxB58o",
       authDomain: "coupleexpenses-bbad1.firebaseapp.com",
       databaseURL: "https://coupleexpenses-bbad1-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "coupleexpenses-bbad1",
-      storageBucket: "coupleexpenses-bbad1.firebasestorage.app",
+      storageBucket: "coupleexpenses-bbad1.appspot.com",
       messagingSenderId: "1078850646299",
       appId: "1:1078850646299:web:5849ca65f9d4270661e3be"
     };
@@ -49,12 +49,13 @@
     firebase.initializeApp(firebaseConfig);
     window.db = firebase.database();
 
-    // ✅ Delay app logic until after Firebase is initialized
+    // Start your app
     window.addEventListener("load", () => {
       startApp();
     });
   </script>
 
+  <!-- Your app logic -->
   <script src="script.js"></script>
 </body>
 </html>

@@ -30,20 +30,36 @@
     <div id="expenses"></div>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+ <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 
-  <!-- Firebase Config -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyB9EjyfRH-Hcl55GAOM81JOkEHXePxB58o",
-      authDomain: "coupleexpenses-bbad1.firebaseapp.com",
-      databaseURL: "https://coupleexpenses-bbad1-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "coupleexpenses-bbad1",
-      storageBucket: "coupleexpenses-bbad1.firebasestorage.app",
-      messagingSenderId: "1078850646299",
-      appId: "1:1078850646299:web:5849ca65f9d4270661e3be"
+<!-- Firebase Config + Init -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB9EjyfRH-Hcl55GAOM81JOkEHXePxB58o",
+    authDomain: "coupleexpenses-bbad1.firebaseapp.com",
+    databaseURL: "https://coupleexpenses-bbad1-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "coupleexpenses-bbad1",
+    storageBucket: "coupleexpenses-bbad1.firebasestorage.app",
+    messagingSenderId: "1078850646299",
+    appId: "1:1078850646299:web:5849ca65f9d4270661e3be"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Start the app after Firebase is ready
+  window.db = firebase.database(); // Expose db globally
+  window.addEventListener("load", () => {
+    startApp(); // call the function from script.js
+  });
+</script>
+
+<!-- Main App Script -->
+<script src="script.js"></script>
+
+
     };
 
     firebase.initializeApp(firebaseConfig);

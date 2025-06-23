@@ -1,12 +1,10 @@
-// ✅ Declare these globally
 let user = null;
 let expenses = [];
 const budget = 15000;
 
 function startApp() {
-  const db = window.db; // Get db from global Firebase
+  const db = window.db;
 
-  // ✅ Make these globally available
   window.loginAs = function(role) {
     console.log("Login as", role);
     user = role;
@@ -120,8 +118,3 @@ function startApp() {
     }
   }
 }
-// Start app after everything is loaded
-window.addEventListener("load", () => {
-  startApp();
-});
-

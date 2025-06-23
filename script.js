@@ -1,6 +1,6 @@
 let user = null;
 let expenses = [];
-const budget = 15000;
+const budget = 16000;
 
 function startApp() {
   const db = window.db;

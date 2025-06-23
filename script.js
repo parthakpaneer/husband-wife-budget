@@ -1,7 +1,8 @@
+let user = null;
+let expenses = [];
+const budget = 15000;
+
 function startApp() {
-  let user = null;
-  let expenses = [];
-  const budget = 15000;
   const db = window.db;
 
   window.loginAs = function(role) {

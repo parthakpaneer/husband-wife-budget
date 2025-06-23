@@ -120,3 +120,8 @@ function startApp() {
     }
   }
 }
+// Start app after everything is loaded
+window.addEventListener("load", () => {
+  startApp();
+});
+

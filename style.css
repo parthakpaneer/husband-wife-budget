@@ -6,22 +6,23 @@ body, html {
   font-family: 'Quicksand', sans-serif;
   color: #fff;
   text-align: center;
-  background-image: url('assets/hearts.jpg'); 
+  background-image: url('assets/hearts.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100%;
   min-height: 100vh;
   backdrop-filter: blur(3px);
+  overflow-x: hidden;
 }
 
 #login-box, #tracker {
-  margin-top: 60px;
+  margin: 60px auto 20px;
   background: rgba(0, 0, 0, 0.65);
   padding: 30px 20px;
   border-radius: 20px;
-  display: inline-block;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  display: block;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   max-width: 90%;
   width: 400px;
 }
@@ -31,6 +32,7 @@ h1, h2 {
   font-weight: 600;
 }
 
+/* Stylish Buttons */
 button {
   padding: 12px 24px;
   margin: 10px 5px;
@@ -42,7 +44,7 @@ button {
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s ease, background 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
@@ -50,13 +52,14 @@ button:hover {
   background: linear-gradient(to right, #ff5b9a, #ff85ba);
 }
 
+/* Input Fields */
 input[type="number"],
 input[type="text"] {
   padding: 10px;
   margin: 8px 4px;
   border-radius: 10px;
   border: none;
-  width: 80%;
+  width: calc(100% - 32px);
   max-width: 250px;
   font-size: 14px;
   outline: none;
@@ -70,10 +73,16 @@ input:focus {
   box-shadow: 0 0 8px #ff6fa1;
 }
 
+/* Form Container */
 #form-area {
   margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
+/* Expenses Display */
 #expenses {
   margin-top: 30px;
   text-align: left;
@@ -87,11 +96,12 @@ input:focus {
   margin: 8px;
   border-radius: 12px;
   color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .expense-entry img {
@@ -103,10 +113,45 @@ input:focus {
   vertical-align: middle;
 }
 
+.expense-entry span {
+  flex: 1 1 auto;
+  margin-left: 10px;
+}
+
 .expense-entry button {
   background: #ff4e6d;
   padding: 6px 12px;
   border-radius: 8px;
   font-size: 12px;
   margin-left: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  #login-box, #tracker {
+    width: 90%;
+    padding: 20px 10px;
+  }
+
+  #form-area {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input[type="number"],
+  input[type="text"] {
+    width: 90%;
+    max-width: none;
+  }
+
+  .expense-entry {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .expense-entry button {
+    margin-top: 8px;
+    align-self: flex-end;
+  }
 }
